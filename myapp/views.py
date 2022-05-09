@@ -1,21 +1,17 @@
 from django.shortcuts import render
 from .models import *
 from django.contrib import messages
-from twilio.rest import Client
-
+import requests
 # Create your views here.
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'danger'
+}
 
 def index(request):
     return render(request,'index.html')
 
-# def whatsappdata(phone):
-#     import time
-#     import webbrowser as web
-#     import pyautogui as pg
-#     phone = "+91"+phone
-#     web.open('https://web.whatsapp.com/send?phone='+phone+'&text='+"Thank You")
-#     time.sleep(30)
-#     pg.press('enter')
+
 
 def insertcontactdata(request):
     if request.method == 'POST':
@@ -26,25 +22,14 @@ def insertcontactdata(request):
         city = request.POST.get('city')
         investment = request.POST.get('investment')
 
-        account_sid = 'ACa28c1bab9b1e9a20d266a481c2708ffb'
-        auth_token = '6af73766c7f60977ecb22d5e2ca7ab57'
-        client = Client(account_sid, auth_token)
-
-        message = client.messages.create(
-            body="Thak You.",
-            from_='+19704802305',
-            to=f'+91{phone}'
-        )
-
-        print(message.sid)
-
-        # whatsappdata(phone)
-
+        url = f"https://onlysms.co.in/api/sms.aspx?UserID=DHAMENTDND&UserPass=Dhm@369&MobileNo={phone}&GSMID=KBKADV&PEID=1701162244536230346&Message=Dear Client Trade summary Relience 100 share buy @235.223 SBI Sale 100 share @358.56  total out standing Rs. 435 KBKADV&TEMPID=1707162503246916721&UNICODE=TEXT"
+        response= requests.get(url)
+        response.text
 
         query = contact(name=name, email=email, phone=phone, pincode=pincode, city=city, investment=investment)
         query.save()
         messages.add_message(request, messages.SUCCESS, "data has been submitted")
     else:
-        messages.add_message(request, messages.WARNING, "error occured")
+        messages.error(request, "error occured")
 
     return render(request, 'index.html')

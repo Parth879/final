@@ -3,6 +3,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
     * {
       box-sizing: border-box;
@@ -76,9 +77,20 @@
 </head>
 
 <body>
+<center>
+{% if messages %}
+    {% for msg in messages %}
+        <div class="alert alert-{{ msg.tags }}" role="alert">
+            <strong>{{ msg }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+    {% endfor %}
+{% endif %}
+</center>
 
-
-  <h2>Submit You Data Here</h2>
+  <h2>Submit Your Data Here</h2>
 
   <div class="container">
     <form action="{% url 'insertcontactdata' %}" method="post">
@@ -88,7 +100,7 @@
           <label for="name">Enter Your Name</label>
         </div>
         <div class="col-75">
-          <input type="text" id="name" name="name" placeholder="Your name..">
+          <input type="text" id="name" name="name" placeholder="Your name.." required>
         </div>
       </div>
       <div class="row">
@@ -96,7 +108,7 @@
           <label for="email">Enter Your Email</label>
         </div>
         <div class="col-75">
-          <input type="text" id="email" name="email" placeholder="Your Your Email..">
+          <input type="text" id="email" name="email" placeholder="Your Your Email.." required>
         </div>
       </div>
       <div class="row">
@@ -104,7 +116,7 @@
           <label for="phone">Enter Your Phone no</label>
         </div>
         <div class="col-75">
-          <input type="text" id="phone" name="phone" placeholder="Your Your Phone No..">
+          <input type="text" id="phone" name="phone" placeholder="Your Your Phone No.." required>
         </div>
       </div>
 
@@ -113,7 +125,7 @@
           <label for="city">Enter Your City</label>
         </div>
         <div class="col-75">
-          <input type="text" id="city" name="city" placeholder="Your Your city..">
+          <input type="text" id="city" name="city" placeholder="Your Your city.." required>
         </div>
       </div>
       <div class="row">
@@ -121,7 +133,7 @@
           <label for="Pincode">Enter Your Pincode</label>
         </div>
         <div class="col-75">
-          <input type="text" id="Pincode" name="pincode" placeholder="Your Your Pincode..">
+          <input type="text" id="Pincode" name="pincode" placeholder="Your Your Pincode.." required>
         </div>
       </div>
       <div class="row">
